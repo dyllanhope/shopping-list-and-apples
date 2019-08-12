@@ -63,7 +63,7 @@ window.onclick = (event) => {
     if(item){
         shopInstance.deleteItem(item.trim());
     };
-    localStorage['list'] = JSON.stringify(shopInstance.listDisplay());
+    localStorage['list'] = JSON.stringify(shopInstance.listDisplay()); 
     buildList();
 };
 
