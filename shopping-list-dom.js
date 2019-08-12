@@ -12,7 +12,7 @@ let clearBtn = document.querySelector('.clearBtn');
 let listTemplate = Handlebars.compile(listTemplateSource);
 let shoppingList = document.querySelector('.shoppingList');
 
-if(localStorage['list']){
+if (localStorage['list']) {
     var oldList = JSON.parse(localStorage['list']);
 } else {
     oldList = [];
@@ -40,7 +40,7 @@ updateSettings.addEventListener('click', () => {
     shopInstance.setTopic((topicInput.value).toLowerCase());
     shopInstance.overBudgetCheck();
     displayError();
-    if(shopInstance.overBudgetCheck()){
+    if (shopInstance.overBudgetCheck()) {
         addBtn.disabled = true;
     } else {
         addBtn.disabled = false;
@@ -50,7 +50,7 @@ updateSettings.addEventListener('click', () => {
 addBtn.addEventListener('click', () => {
     errorDisplay.innerHTML = '';
     errorDisplay.style.display = 'none';
-    if(itemDescription.value && itemPrice.value){
+    if (itemDescription.value && itemPrice.value) {
         let descriptionItem = (itemDescription.value).toLowerCase();
         shopInstance.addItem(Number(itemPrice.value), descriptionItem.trim());
         shopInstance.overBudgetCheck();
@@ -61,30 +61,29 @@ addBtn.addEventListener('click', () => {
         errorDisplay.style.display = 'unset';
         errorDisplay.innerHTML = 'Please fill out all of the below fields';
     }
-    if(shopInstance.overBudgetCheck()){
+    if (shopInstance.overBudgetCheck()) {
         addBtn.disabled = true;
     };
 });
 
 shoppingList.ondblclick = (event) => {
-    let shouldDelete = confirm('Are you sure you would like to delete this item?');
-    if(shouldDelete){
-        let item = event.target.id;
-    if(item){
-        shopInstance.deleteItem(item.trim());
-    };
-    localStorage['list'] = JSON.stringify(shopInstance.listDisplay()); 
-    buildList();
-    displayError();
+    let item = event.target.id;
+    let shouldDelete = confirm('Are you sure you would like to delete ' + item + ' from your list?');
+    if (shouldDelete) {
+        if (item) {
+            shopInstance.deleteItem(item.trim());
+        };
+        localStorage['list'] = JSON.stringify(shopInstance.listDisplay());
+        location.reload();
     };
 };
 
 const displayError = () => {
-    if (shopInstance.errorDisplay()) {  
+    if (shopInstance.errorDisplay()) {
         errorDisplay.style.display = 'unset';
         errorDisplay.innerHTML = shopInstance.errorDisplay();
     } else {
-        errorDisplay.style.display = 'none';        
+        errorDisplay.style.display = 'none';
     };
 };
 
