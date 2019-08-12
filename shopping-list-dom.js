@@ -40,6 +40,11 @@ updateSettings.addEventListener('click', () => {
     shopInstance.setTopic((topicInput.value).toLowerCase());
     shopInstance.overBudgetCheck();
     displayError();
+    if(shopInstance.overBudgetCheck()){
+        addBtn.disabled = true;
+    } else {
+        addBtn.disabled = false;
+    }
 });
 
 addBtn.addEventListener('click', () => {
@@ -56,6 +61,9 @@ addBtn.addEventListener('click', () => {
         errorDisplay.style.display = 'unset';
         errorDisplay.innerHTML = 'Please fill out all of the below fields';
     }
+    if(shopInstance.overBudgetCheck()){
+        addBtn.disabled = true;
+    };
 });
 
 window.onclick = (event) => {

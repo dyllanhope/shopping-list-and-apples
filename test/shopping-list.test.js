@@ -70,7 +70,7 @@ describe('Shopping list tests', () => {
             instance.addItem(8, 'green apples');
             instance.returnTotal();
             instance.overBudgetCheck();
-            assert.equal(instance.errorDisplay(), "Your total has gone over your set budget!");
+            assert.equal(instance.errorDisplay(), "Your total has reached your budget");
         });
         it('Should return no message as the total is lower than the budget', () => {
             let instance = ShoppingListManager();

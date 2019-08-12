@@ -55,10 +55,12 @@ const ShoppingListManager = (list) => {
 
     const overBudgetCheck = () => {
         totalList();
-        if (grandTotal > budget) {
-            errorMessage = 'Your total has gone over your set budget!';
-        } else if (errorMessage === 'Your total has gone over your set budget!') {
+        if (grandTotal >= budget) {
+            errorMessage = 'Your total has reached your budget';
+            return true;
+        } else if (errorMessage === 'Your total has reached your budget') {
             errorMessage = '';
+            return false;
         };
     };
 
