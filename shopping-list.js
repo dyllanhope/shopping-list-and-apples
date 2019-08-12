@@ -71,20 +71,28 @@ const ShoppingListManager = (list) => {
 
     const totalList = () => {
         grandTotal = 0;
-        for(var x = 0; x<listMap.length; x++){
+        for (var x = 0; x < listMap.length; x++) {
             grandTotal += listMap[x].cost;
         };
     };
 
-    const returnTotal = () => { 
+    const returnTotal = () => {
         totalList();
-        return Number(grandTotal).toFixed(2); 
+        return Number(grandTotal).toFixed(2);
     };
 
     const clear = () => {
         listMap = [];
         grandTotal = 0;
         errorMessage = '';
+    };
+
+    const deleteItem = (description) => {
+        for (var i = 0; i < listMap.length; i++) {
+            if (listMap[i].description === description) {
+                listMap.splice(i,1);
+            };
+        };
     };
 
     return {
@@ -97,6 +105,7 @@ const ShoppingListManager = (list) => {
         addItem,
         listDisplay,
         returnTotal,
-        clear
+        clear,
+        deleteItem
     };
 };

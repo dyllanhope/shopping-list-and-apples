@@ -58,6 +58,15 @@ addBtn.addEventListener('click', () => {
     }
 });
 
+window.onclick = (event) => {
+    let item = event.target.id;
+    if(item){
+        shopInstance.deleteItem(item.trim());
+    };
+    localStorage['list'] = JSON.stringify(shopInstance.listDisplay());
+    buildList();
+};
+
 const displayError = () => {
     if (shopInstance.errorDisplay()) {  
         errorDisplay.style.display = 'unset';
