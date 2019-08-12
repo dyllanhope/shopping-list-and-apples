@@ -8,6 +8,7 @@ let itemPrice = document.querySelector('.price');
 let itemDescription = document.querySelector('.description');
 let addBtn = document.querySelector('.addItem');
 let listData = document.querySelector('.listData');
+let clearBtn = document.querySelector('.clearBtn');
 
 let listTemplate = Handlebars.compile(listTemplateSource);
 
@@ -24,8 +25,16 @@ window.onload = () => {
     errorDisplay.style.display = 'none';
 };
 
+clearBtn.addEventListener('click', () => {
+    localStorage.clear();
+    shopInstance.clear();
+    buildList();
+    displayError();
+});
+
 updateSettings.addEventListener('click', () => {
     errorDisplay.innerHTML = '';
+    errorDisplay.style.display = 'none';
     let budget = Number(budgetInput.value);
     shopInstance.setBudget(budget);
     shopInstance.setTopic((topicInput.value).toLowerCase());
@@ -35,12 +44,18 @@ updateSettings.addEventListener('click', () => {
 
 addBtn.addEventListener('click', () => {
     errorDisplay.innerHTML = '';
-    let descriptionItem = (itemDescription.value).toLowerCase();
-    shopInstance.addItem(Number(itemPrice.value), descriptionItem.trim());
-    shopInstance.overBudgetCheck();
-    displayError();
-    buildList();
-    localStorage['list'] = JSON.stringify(shopInstance.listDisplay());
+    errorDisplay.style.display = 'none';
+    if(itemDescription.value && itemPrice.value){
+        let descriptionItem = (itemDescription.value).toLowerCase();
+        shopInstance.addItem(Number(itemPrice.value), descriptionItem.trim());
+        shopInstance.overBudgetCheck();
+        displayError();
+        buildList();
+        localStorage['list'] = JSON.stringify(shopInstance.listDisplay());
+    } else {
+        errorDisplay.style.display = 'unset';
+        errorDisplay.innerHTML = 'Please fill out all of the below fields';
+    }
 });
 
 const displayError = () => {

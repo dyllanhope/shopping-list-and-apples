@@ -81,6 +81,12 @@ const ShoppingListManager = (list) => {
         return Number(grandTotal).toFixed(2); 
     };
 
+    const clear = () => {
+        listMap = [];
+        grandTotal = 0;
+        errorMessage = '';
+    };
+
     return {
         setBudget,
         returnBudget,
@@ -90,6 +96,7 @@ const ShoppingListManager = (list) => {
         returnTopic,
         addItem,
         listDisplay,
-        returnTotal
+        returnTotal,
+        clear
     };
 };
