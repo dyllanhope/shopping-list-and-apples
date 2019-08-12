@@ -11,9 +11,16 @@ let listData = document.querySelector('.listData');
 
 let listTemplate = Handlebars.compile(listTemplateSource);
 
-let shopInstance = ShoppingListManager();
+if(localStorage['list']){
+    var oldList = JSON.parse(localStorage['list']);
+} else {
+    oldList = [];
+};
+
+let shopInstance = ShoppingListManager(oldList);
 
 window.onload = () => {
+    buildList();
     errorDisplay.style.display = 'none';
 };
 
@@ -33,6 +40,7 @@ addBtn.addEventListener('click', () => {
     shopInstance.overBudgetCheck();
     displayError();
     buildList();
+    localStorage['list'] = JSON.stringify(shopInstance.listDisplay());
 });
 
 const displayError = () => {

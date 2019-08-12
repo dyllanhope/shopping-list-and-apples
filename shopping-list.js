@@ -1,35 +1,42 @@
-const ShoppingListManager = () => {
+const ShoppingListManager = (list) => {
     let budget = 0;
     let topic = '';
     let grandTotal = 0;
     let errorMessage = '';
-    let listMap = {};
-    let itemCounts = {};
+    let listMap = list;
 
     const setBudget = (num) => { budget = num; };
 
     const returnBudget = () => { return budget; };
 
-    const addItem = (price, description) => {
+    const addItem = (costPrice, description) => {
+        let found = false;
+        let price = Number(costPrice);
         errorMessage = '';
         if (topic === '') {
-            if (listMap[description] === undefined) {
-                listMap[description] = price;
-                itemCounts[description] = 1;
-            } else {
-                listMap[description] += price;
-                itemCounts[description] ++;
-            }
-            totalList();
+            for (var i = 0; i < listMap.length; i++) {
+                if (listMap[i].description === description) {
+                    listMap[i].qty++;
+                    let newCost = Number(listMap[i].cost) + price;
+                    listMap[i].cost = newCost;
+                    found = true;
+                };
+            };
+            if (!found) {
+                listMap.push({ description: description, cost: price, qty: 1 });
+            };
         } else if (testTopic(description)) {
-            if (listMap[description] === undefined) {
-                listMap[description] = price;
-                itemCounts[description] = 1;
-            } else {
-                listMap[description] += price;
-                itemCounts[description] ++;
-            }
-            totalList();
+            for (var i = 0; i < listMap.length; i++) {
+                if (listMap[i].description === description) {
+                    listMap[i].qty++;
+                    let newCost = Number(listMap[i].cost) + price;
+                    listMap[i].cost = newCost;
+                    found = true;
+                };
+            };
+            if (!found) {
+                listMap.push({ description: description, cost: price, qty: 1 });
+            };
         } else {
             errorMessage = "This item doesn't contain the keyword '" + topic + "'";
         }
@@ -49,7 +56,7 @@ const ShoppingListManager = () => {
     const overBudgetCheck = () => {
         if (grandTotal > budget) {
             errorMessage = 'Your total has gone over your set budget!';
-        } else if (errorMessage === 'Your total has gone over your set budget!'){
+        } else if (errorMessage === 'Your total has gone over your set budget!') {
             errorMessage = '';
         };
     };
@@ -60,29 +67,18 @@ const ShoppingListManager = () => {
 
     const returnTopic = () => { return topic; };
 
-    const listDisplay = () => {
-        let displayList = [];
-        let counts = Object.values(itemCounts);
-        let descriptionList = Object.keys(listMap);
-        let priceList = Object.values(listMap);
-        for (var x = 0; x < descriptionList.length; x++) {
-            displayList.push({ description: descriptionList[x], cost: priceList[x].toFixed(2), qty: counts[x] });
-        };
-
-        return displayList;
-    };
+    const listDisplay = () => { return listMap; };
 
     const totalList = () => {
         grandTotal = 0;
-        let costs = Object.values(listMap);
-        let num;
-        for (num of costs) {
-            grandTotal += Number(num);
+        for(var x = 0; x<listMap.length; x++){
+            grandTotal += listMap[x].cost;
         };
     };
 
-    const returnTotal = () => {
-        return grandTotal.toFixed(2);
+    const returnTotal = () => { 
+        totalList();
+        return Number(grandTotal).toFixed(2); 
     };
 
     return {
