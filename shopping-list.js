@@ -43,14 +43,12 @@ const ShoppingListManager = (list) => {
     };
 
     const testTopic = (description) => {
-        let sentenceArr = description.split(' ');
-        let word;
-        for (word of sentenceArr) {
-            if (word === topic) {
-                return true;
-            };
+        let check = description.indexOf(topic);
+        if (check >= 0 ) {
+            return true;
+        } else {
+            return false;
         };
-        return false;
     };
 
     const overBudgetCheck = () => {
@@ -93,7 +91,7 @@ const ShoppingListManager = (list) => {
     const deleteItem = (description) => {
         for (var i = 0; i < listMap.length; i++) {
             if (listMap[i].description === description) {
-                listMap.splice(i,1);
+                listMap.splice(i, 1);
             };
         };
     };

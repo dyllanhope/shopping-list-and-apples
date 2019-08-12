@@ -10,13 +10,11 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
 	<title>Shopping list</title>
 	<script type='text/template' class='listTemplate'>
-		<ul class='list-group list-group-flush'>
 			{{#each items}}
 				<li id='{{description}}'class='list-group-item'>{{description}} @ R{{cost}} ({{qty}})</li>
 			{{/each}}
-		</ul>
 
-		<h4>Total: {{total}}</h4>
+		<h4 style='margin: 3px'>Total: {{total}}</h4>
 	</script>
 </head>
 
@@ -54,7 +52,10 @@
 				<button style='margin-bottom: 5px' type="button" class="btn btn-primary addItem">Add Item</button>
 				<button style='margin-bottom: 5px' type="button" class="btn btn-primary clearBtn">Clear List</button>
 			</div>
-			<div class='col-5 border listData'></div>
+			<div class='col-5'>
+				<ul class='border list-group list-group-flush shoppingList listData'>
+				</ul>
+			</div>
 			<div class='col-3'></div>
 		</div>
 	</div>

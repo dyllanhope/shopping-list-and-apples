@@ -10,6 +10,7 @@ let addBtn = document.querySelector('.addItem');
 let listData = document.querySelector('.listData');
 let clearBtn = document.querySelector('.clearBtn');
 let listTemplate = Handlebars.compile(listTemplateSource);
+let shoppingList = document.querySelector('.shoppingList');
 
 if(localStorage['list']){
     var oldList = JSON.parse(localStorage['list']);
@@ -26,6 +27,7 @@ window.onload = () => {
 clearBtn.addEventListener('click', () => {
     localStorage.clear();
     shopInstance.clear();
+    addBtn.disabled = false;
     buildList();
     displayError();
 });
@@ -64,13 +66,17 @@ addBtn.addEventListener('click', () => {
     };
 });
 
-window.onclick = (event) => {
-    let item = event.target.id;
+shoppingList.ondblclick = (event) => {
+    let shouldDelete = confirm('Are you sure you would like to delete this item?');
+    if(shouldDelete){
+        let item = event.target.id;
     if(item){
         shopInstance.deleteItem(item.trim());
     };
     localStorage['list'] = JSON.stringify(shopInstance.listDisplay()); 
     buildList();
+    displayError();
+    };
 };
 
 const displayError = () => {
