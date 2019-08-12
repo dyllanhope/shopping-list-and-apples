@@ -3,7 +3,7 @@ const ShoppingListManager = (list) => {
     let topic = '';
     let grandTotal = 0;
     let errorMessage = '';
-    let listMap = list;
+    let listMap = list || [];
 
     const setBudget = (num) => { budget = num; };
 
@@ -54,6 +54,7 @@ const ShoppingListManager = (list) => {
     };
 
     const overBudgetCheck = () => {
+        totalList();
         if (grandTotal > budget) {
             errorMessage = 'Your total has gone over your set budget!';
         } else if (errorMessage === 'Your total has gone over your set budget!') {
