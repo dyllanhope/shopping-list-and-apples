@@ -9,7 +9,6 @@ let itemDescription = document.querySelector('.description');
 let addBtn = document.querySelector('.addItem');
 let listData = document.querySelector('.listData');
 let clearBtn = document.querySelector('.clearBtn');
-
 let listTemplate = Handlebars.compile(listTemplateSource);
 
 if(localStorage['list']){
@@ -17,7 +16,6 @@ if(localStorage['list']){
 } else {
     oldList = [];
 };
-
 let shopInstance = ShoppingListManager(oldList);
 
 window.onload = () => {
