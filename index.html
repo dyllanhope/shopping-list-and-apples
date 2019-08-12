@@ -1,12 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+	<title>Shopping list</title>
+	<script type='text/template' class='listTemplate'>
+		<ul class='list-group list-group-flush'>
+			{{#each items}}
+				<li class='list-group-item'>{{description}} @ R{{cost}} ({{qty}})</li>
+			{{/each}}
+		</ul>
+
+		<h4>Total: {{total}}</h4>
+	</script>
 </head>
+
 <body>
-	<h1>Shopping list</h1>
+	<div class='container'>
+		<div style='margin-bottom:10px' class='row'>
+			<div class='col-12'>
+				<h1 style='margin-bottom: 50px'><u>Shopping list</u></h1>
+				<label for="budget">Enter budget: <input class='budget form-control' name='budget' type="number"
+						placeholder="0.00"></label>
+				<label for="budget">Enter topic: <input class='topic form-control' name='topic' type="text"
+						placeholder="eg. Apples"></label>
+				<button type="button" class="btn btn-primary updateSettings">Update Settings</button>
+			</div>
+		</div>
+		<div class='row'>
+			<div style='margin-bottom:10px' class='col-12'>
+				<div class="alert alert-danger error" role="alert"></div>
+			</div>
+		</div>
+		<div class='row'>
+			<div class='col-4'>
+				<div style='margin-top: 10px' class="input-group mb-3">
+					<div class="input-group-prepend">
+						<span class="input-group-text">R</span>
+					</div>
+					<input type="number" class="form-control price" aria-label="Amount (to the nearest rand)">
+				</div>
+
+				<div style='margin-bottom: 10px' class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Description</span>
+					</div>
+					<textarea class="form-control description" aria-label="With textarea"></textarea>
+				</div>
+				<button type="button" class="btn btn-primary addItem">Add Item</button>
+			</div>
+			<div class='col-3'></div>
+			<div class='col-5 border listData'></div>
+		</div>
+	</div>
 </body>
+
+<script src='./shopping-list.js'></script>
+<script src='./shopping-list-dom.js'></script>
+
 </html>
